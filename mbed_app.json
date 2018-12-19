@@ -23,74 +23,44 @@
             "nsapi.default-wifi-password"       : "\"validation\""
         },
         "K64F": {
-            "target.features_add"               : ["BOOTLOADER"],
-            "target.bootloader_img"             : "bootloader/mbed-bootloader-K64F.bin",
-            "target.header_offset"              : "0x10000",
-            "target.app_offset"                 : "0x10400"
+            "target.features_add"               : ["BOOTLOADER"]
         },
         "K66F": {
-            "target.features_add"               : ["BOOTLOADER"],
-            "target.bootloader_img"             : "bootloader/mbed-bootloader-K66F.bin",
-            "target.header_offset"              : "0x10000",
-            "target.app_offset"                 : "0x10400"
+            "target.features_add"               : ["BOOTLOADER"]
         },
         "NUCLEO_F429ZI": {
-            "target.features_add"               : ["BOOTLOADER"],
-            "target.bootloader_img"             : "bootloader/mbed-bootloader-NUCLEO_F429ZI.bin",
-            "target.header_offset"              : "0x10000",
-            "target.app_offset"                 : "0x10400"
+            "target.features_add"               : ["BOOTLOADER"]
         },
         "NUCLEO_F767ZI": {
-            "target.features_add"               : ["BOOTLOADER"],
-            "target.bootloader_img"             : "bootloader/mbed-bootloader-NUCLEO_F767ZI.bin",
-            "target.header_offset"              : "0x10000",
-            "target.app_offset"                 : "0x10400"
+            "target.features_add"               : ["BOOTLOADER"]
         },
         "NUCLEO_F746ZG": {
-            "target.features_add"               : ["BOOTLOADER"],
-            "target.bootloader_img"             : "bootloader/mbed-bootloader-NUCLEO_F746ZG.bin",
-            "target.header_offset"              : "0x10000",
-            "target.app_offset"                 : "0x10400"
+            "target.features_add"               : ["BOOTLOADER"]
         },
         "DISCO_L475VG_IOT01A": {
             "target.features_add"               : ["BOOTLOADER"],
             "target.extra_labels_add"           : ["WIFI_ISM43362"],
-            "target.network-default-interface-type" : "WIFI",
-            "target.bootloader_img"             : "bootloader/mbed-bootloader-DISCO_L475VG_IOT01A.bin",
-            "target.header_offset"              : "0x10000",
-            "target.app_offset"                 : "0x10400"
+            "target.network-default-interface-type" : "WIFI"
         },
         "DISCO_F413ZH": {
             "target.features_add"               : ["BOOTLOADER"],
             "target.extra_labels_add"           : ["WIFI_ISM43362"],
-            "target.network-default-interface-type" : "WIFI",
-            "target.bootloader_img"             : "bootloader/mbed-bootloader-DISCO_F413ZH.bin",
-            "target.header_offset"              : "0x10000",
-            "target.app_offset"                 : "0x10400"
+            "target.network-default-interface-type" : "WIFI"
         },
         "DISCO_F746NG": {
-            "target.features_add"               : ["BOOTLOADER"],
-            "target.bootloader_img"             : "bootloader/mbed-bootloader-DISCO_F746NG.bin",
-            "target.header_offset"              : "0x10000",
-            "target.app_offset"                 : "0x10400"
+            "target.features_add"               : ["BOOTLOADER"]
         },
         "NUMAKER_PFM_NUC472": {
             "target.features_add"               : ["BOOTLOADER"],
             "target.network-default-interface-type" : "ETHERNET",
             "drivers.uart-serial-rxbuf-size"    : 1024,
-            "drivers.uart-serial-txbuf-size"    : 1024,
-            "target.bootloader_img"             : "bootloader/mbed-bootloader-NUMAKER_PFM_NUC472.bin",
-            "target.header_offset"              : "0x10000",
-            "target.app_offset"                 : "0x10400"
+            "drivers.uart-serial-txbuf-size"    : 1024
         },
         "NUMAKER_PFM_M487": {
             "target.features_add"               : ["BOOTLOADER"],
             "target.network-default-interface-type" : "ETHERNET",
             "drivers.uart-serial-rxbuf-size"    : 1024,
-            "drivers.uart-serial-txbuf-size"    : 1024,
-            "target.bootloader_img"             : "bootloader/mbed-bootloader-NUMAKER_PFM_M487.bin",
-            "target.header_offset"              : "0x10000",
-            "target.app_offset"                 : "0x10400"
+            "drivers.uart-serial-txbuf-size"    : 1024
         },
         "NUMAKER_IOT_M487": {
             "target.features_add"               : ["BOOTLOADER"],
@@ -99,23 +69,14 @@
             "esp8266.rx"                        : "PH_9",
             "esp8266.provide-default"           : true,
             "drivers.uart-serial-rxbuf-size"    : 1024,
-            "drivers.uart-serial-txbuf-size"    : 1024,
-            "target.bootloader_img"             : "bootloader/mbed-bootloader-NUMAKER_IOT_M487.bin",
-            "target.header_offset"              : "0x10000",
-            "target.app_offset"                 : "0x10400"
+            "drivers.uart-serial-txbuf-size"    : 1024
         },
         "SDT64B": {
-            "target.features_add"               : ["BOOTLOADER"],
-            "target.bootloader_img"             : "bootloader/mbed-bootloader-SDT64B.bin",
-            "target.header_offset"              : "0x10000",
-            "target.app_offset"                 : "0x10400"
+            "target.features_add"               : ["BOOTLOADER"]
         },
         "UBLOX_EVK_ODIN_W2": {
             "target.features_add"               : ["BOOTLOADER"],
-            "target.network-default-interface-type" : "WIFI",
-            "target.bootloader_img"             : "bootloader/mbed-bootloader-UBLOX_EVK_ODIN_W2.bin",
-            "target.header_offset"              : "0x10000",
-            "target.app_offset"                 : "0x10400"
+            "target.network-default-interface-type" : "WIFI"
         },
         "UBLOX_C030_U201": {
             "target.features_add"               : ["BOOTLOADER", "LWIP"],
@@ -138,23 +99,14 @@
             "lwip.ethernet-enabled"             : false,
             "lwip.ppp-enabled"                  : true,
             "lwip.tcp-enabled"                  : true,
-            "mbed-trace.enable"                 : false,
-            "target.bootloader_img"             : "bootloader/mbed-bootloader-UBLOX_C030_U201.bin",
-            "target.header_offset"              : "0x10000",
-            "target.app_offset"                 : "0x10400"
+            "mbed-trace.enable"                 : false
         },
         "MTB_MXCHIP_EMW3166": {
             "target.features_add"               : ["BOOTLOADER"],
-            "target.bootloader_img"             : "bootloader/mbed-bootloader-MTB_MXCHIP_EMW3166.bin",
-            "target.header_offset"              : "0x20000",
-            "target.app_offset"                 : "0x20400",
             "target.OUTPUT_EXT"                 : "hex"
         },
         "MTB_USI_WM_BN_BM_22": {
             "target.features_add"               : ["BOOTLOADER"],
-            "target.bootloader_img"             : "bootloader/mbed-bootloader-MTB_USI_WM_BN_BM_22.bin",
-            "target.header_offset"              : "0x20000",
-            "target.app_offset"                 : "0x20400",
             "target.OUTPUT_EXT"                 : "hex"
         }
     },
