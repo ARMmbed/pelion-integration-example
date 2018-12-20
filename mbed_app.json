@@ -1,69 +1,59 @@
 {
-    "macros": [
-        "ARM_UC_USE_PAL_BLOCKDEVICE=1",
-        "MBED_CLOUD_CLIENT_UPDATE_STORAGE=ARM_UCP_FLASHIAP_BLOCKDEVICE",
-        "MBED_CLIENT_USER_CONFIG_FILE=\"mbed_cloud_client_user_config.h\"",
-        "MBED_CLOUD_CLIENT_USER_CONFIG_FILE=\"mbed_cloud_client_user_config.h\"",
-        "PAL_USER_DEFINED_CONFIGURATION=\"sotp_fs_config_MbedOS.h\"",
-        "PAL_FS_MOUNT_POINT_PRIMARY=\"/fs\"",
-        "MBEDTLS_USER_CONFIG_FILE=\"mbedTLSConfig_mbedOS.h\"",
-        "PAL_DTLS_PEER_MIN_TIMEOUT=5000"
-    ],
     "target_overrides": {
         "*": {
             "platform.stdio-baud-rate"          : 115200,
             "platform.stdio-convert-newlines"   : true,
-            "update-client.application-details" : "(MBED_CONF_BOOTLOADER_APPLICATION_HEADER_ADDRESS)",
-            "update-client.storage-address"     : "(MBED_CONF_BOOTLOADER_STORAGE_ADDRESS)",
-            "update-client.storage-size"        : "(MBED_CONF_BOOTLOADER_STORAGE_SIZE)",
-            "update-client.storage-locations"   : "(MBED_CONF_BOOTLOADER_STORAGE_LOCATIONS)",
+            "update-client.application-details" : "MBED_CONF_BOOTLOADER_APPLICATION_HEADER_ADDRESS",
+            "update-client.storage-address"     : "MBED_CONF_BOOTLOADER_STORAGE_ADDRESS",
+            "update-client.storage-size"        : "MBED_CONF_BOOTLOADER_STORAGE_SIZE",
+            "update-client.storage-locations"   : "MBED_CONF_BOOTLOADER_STORAGE_LOCATIONS",
             "mbed-trace.enable"                 : null,
             "nsapi.default-wifi-security"       : "WPA_WPA2",
             "nsapi.default-wifi-ssid"           : "\"mbedEnabled\"",
             "nsapi.default-wifi-password"       : "\"validation\""
         },
         "K64F": {
-            "target.features_add"               : ["BOOTLOADER"]
+            "target.features_add"               : ["DEVMGMT", "BOOTLOADER"]
         },
         "K66F": {
-            "target.features_add"               : ["BOOTLOADER"]
+            "target.features_add"               : ["DEVMGMT", "BOOTLOADER"]
         },
         "NUCLEO_F429ZI": {
-            "target.features_add"               : ["BOOTLOADER"]
+            "target.features_add"               : ["DEVMGMT", "BOOTLOADER"]
         },
         "NUCLEO_F767ZI": {
-            "target.features_add"               : ["BOOTLOADER"]
+            "target.features_add"               : ["DEVMGMT", "BOOTLOADER"]
         },
         "NUCLEO_F746ZG": {
-            "target.features_add"               : ["BOOTLOADER"]
+            "target.features_add"               : ["DEVMGMT", "BOOTLOADER"]
         },
         "DISCO_L475VG_IOT01A": {
-            "target.features_add"               : ["BOOTLOADER"],
+            "target.features_add"               : ["DEVMGMT", "BOOTLOADER"],
             "target.extra_labels_add"           : ["WIFI_ISM43362"],
             "target.network-default-interface-type" : "WIFI"
         },
         "DISCO_F413ZH": {
-            "target.features_add"               : ["BOOTLOADER"],
+            "target.features_add"               : ["DEVMGMT", "BOOTLOADER"],
             "target.extra_labels_add"           : ["WIFI_ISM43362"],
             "target.network-default-interface-type" : "WIFI"
         },
         "DISCO_F746NG": {
-            "target.features_add"               : ["BOOTLOADER"]
+            "target.features_add"               : ["DEVMGMT", "BOOTLOADER"]
         },
         "NUMAKER_PFM_NUC472": {
-            "target.features_add"               : ["BOOTLOADER"],
+            "target.features_add"               : ["DEVMGMT", "BOOTLOADER"],
             "target.network-default-interface-type" : "ETHERNET",
             "drivers.uart-serial-rxbuf-size"    : 1024,
             "drivers.uart-serial-txbuf-size"    : 1024
         },
         "NUMAKER_PFM_M487": {
-            "target.features_add"               : ["BOOTLOADER"],
+            "target.features_add"               : ["DEVMGMT", "BOOTLOADER"],
             "target.network-default-interface-type" : "ETHERNET",
             "drivers.uart-serial-rxbuf-size"    : 1024,
             "drivers.uart-serial-txbuf-size"    : 1024
         },
         "NUMAKER_IOT_M487": {
-            "target.features_add"               : ["BOOTLOADER"],
+            "target.features_add"               : ["DEVMGMT", "BOOTLOADER"],
             "target.network-default-interface-type" : "WIFI",
             "esp8266.tx"                        : "PH_8",
             "esp8266.rx"                        : "PH_9",
@@ -72,14 +62,14 @@
             "drivers.uart-serial-txbuf-size"    : 1024
         },
         "SDT64B": {
-            "target.features_add"               : ["BOOTLOADER"]
+            "target.features_add"               : ["DEVMGMT", "BOOTLOADER"]
         },
         "UBLOX_EVK_ODIN_W2": {
-            "target.features_add"               : ["BOOTLOADER"],
+            "target.features_add"               : ["DEVMGMT", "BOOTLOADER"],
             "target.network-default-interface-type" : "WIFI"
         },
         "UBLOX_C030_U201": {
-            "target.features_add"               : ["BOOTLOADER", "LWIP"],
+            "target.features_add"               : ["DEVMGMT", "BOOTLOADER", "LWIP"],
             "target.network-default-interface-type" : "CELLULAR",
             "target.header_format": [
                 ["magic", "const", "32be", "0x5a51b3d4"],
@@ -102,11 +92,11 @@
             "mbed-trace.enable"                 : false
         },
         "MTB_MXCHIP_EMW3166": {
-            "target.features_add"               : ["BOOTLOADER"],
+            "target.features_add"               : ["DEVMGMT", "BOOTLOADER"],
             "target.OUTPUT_EXT"                 : "hex"
         },
         "MTB_USI_WM_BN_BM_22": {
-            "target.features_add"               : ["BOOTLOADER"],
+            "target.features_add"               : ["DEVMGMT", "BOOTLOADER"],
             "target.OUTPUT_EXT"                 : "hex"
         }
     },
@@ -121,31 +111,6 @@
         },
         "main-stack-size": {
             "value": 6000
-        },
-        "cfg-sector-1-address": {
-            "help": "Flash sector address for SOTP sector 1",
-            "macro_name": "PAL_INTERNAL_FLASH_SECTION_1_ADDRESS",
-            "value": "MBED_CONF_BOOTLOADER_CFG_SECTOR_1_ADDRESS"
-        },
-        "cfg-sector-1-size": {
-            "help": "Flash sector size for SOTP sector 1",
-            "macro_name": "PAL_INTERNAL_FLASH_SECTION_1_SIZE",
-            "value": "MBED_CONF_BOOTLOADER_CFG_SECTOR_1_SIZE"
-        },
-        "cfg-sector-2-address": {
-            "help": "Flash sector address for SOTP sector 2",
-            "macro_name": "PAL_INTERNAL_FLASH_SECTION_2_ADDRESS",
-            "value": "MBED_CONF_BOOTLOADER_CFG_SECTOR_1_ADDRESS"
-        },
-        "cfg-sector-2-size": {
-            "help": "Flash sector size for SOTP sector 2",
-            "macro_name": "PAL_INTERNAL_FLASH_SECTION_2_SIZE",
-            "value": "MBED_CONF_BOOTLOADER_CFG_SECTOR_1_SIZE"
-        },
-        "cfg-num-sectors": {
-            "help": "Number of SOTP sectors",
-            "macro_name": "PAL_INT_FLASH_NUM_SECTIONS",
-            "value": 2
         }
     }
 }
