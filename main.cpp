@@ -22,10 +22,6 @@
 #include "FATFileSystem.h"
 #include "LittleFileSystem.h"
 
-// An event queue is a very useful structure to debounce information between contexts (e.g. ISR and normal threads)
-// This is great because things such as network operations are illegal in ISR, so updating a resource in a button's fall() function is not allowed
-EventQueue eventQueue;
-
 // Default network interface object. Don't forget to change the WiFi SSID/password in mbed_app.json if you're using WiFi.
 NetworkInterface *net = NetworkInterface::get_default_instance();
 
@@ -40,25 +36,22 @@ FATFileSystem fs("fs", bd);
 LittleFileSystem fs("fs", bd);
 #endif
 
-// Default User button for GET example
+// Define USE_BUTTON if the board supports user button, which will be used for the GET example
+//#define USE_BUTTON
+#ifdef USE_BUTTON
 InterruptIn button(BUTTON1);
+#endif /* USE_BUTTON */
+
 // Default LED to use for PUT/POST example
 DigitalOut led(LED1);
-// Temperature reading from microcontroller
-AnalogIn adc_temp(ADC_TEMP);
-// Voltage reference reading from microcontroller
-AnalogIn adc_vref(ADC_VREF);
 
-#define SENSORS_POLL_INTERVAL 1.0
-
-// Declaring pointers for access to Pelion Client resources outside of main()
+// Declaring pointers for access to Pelion Device Management Client resources outside of main()
 MbedCloudClientResource *res_button;
 MbedCloudClientResource *res_led;
-MbedCloudClientResource *res_temperature;
-MbedCloudClientResource *res_voltage;
 
-// When the device is registered, this variable will be used to access various useful information, like device ID etc.
-static const ConnectorClientEndpointInfo* endpointInfo;
+// An event queue is a very useful structure to debounce information between contexts (e.g. ISR and normal threads)
+// This is great because things such as network operations are illegal in ISR, so updating a resource in a button's fall() function is not allowed
+EventQueue eventQueue;
 
 /**
  * PUT handler
@@ -83,7 +76,8 @@ void led_post_callback(MbedCloudClientResource *resource, const uint8_t *buffer,
 }
 
 /**
- * Button function triggered by the physical button press.
+ * Button handler
+ * This function will be triggered either by a physical button press or by a ticker every 5 seconds (see below)
  */
 void button_press() {
     int v = res_button->get_value_int() + 1;
@@ -106,35 +100,15 @@ void button_callback(MbedCloudClientResource *resource, const NoticationDelivery
  */
 void registered(const ConnectorClientEndpointInfo *endpoint) {
     printf("Registered to Pelion Device Management. Endpoint Name: %s\n", endpoint->internal_endpoint_name.c_str());
-    endpointInfo = endpoint;
 }
-
-/**
- * Update sensors and report their values.
- * This function is called periodically.
- */
-void sensors_update() {
-    float temp = adc_temp.read()*100;
-    float vref = adc_vref.read();
-    printf("ADC temp:  %6.4f C,  vref: %6.4f %%\r\n", temp, vref);
-    if (endpointInfo) {
-        res_temperature->set_value(temp);
-        res_voltage->set_value(vref);
-    }
-}
-
 
 int main(void) {
     printf("\nStarting Simple Pelion Device Management Client example\n");
 
+#ifdef USE_BUTTON
     // If the User button is pressed ons start, then format storage.
     DigitalIn *user_button = new DigitalIn(BUTTON1);
-#if TARGET_DISCO_L475VG_IOT01A
-    // The user button on DISCO_L475VG_IOT01A works the other way around
-    const int PRESSED = 0;
-#else
     const int PRESSED = 1;
-#endif
     if (user_button->read() == PRESSED) {
         printf("User button is pushed on start. Formatting the storage...\n");
         int storage_status = fs.reformat(bd);
@@ -152,8 +126,9 @@ int main(void) {
     } else {
         printf("You can hold the user button during boot to format the storage and change the device identity.\n");
     }
+#endif /* USE_BUTTON */
 
-    // Connect to the internet (DHCP is expected to be on)
+    // Connect to the Internet (DHCP is expected to be on)
     printf("Connecting to the network using the default network interface...\n");
     net = NetworkInterface::get_default_instance();
 
@@ -176,11 +151,11 @@ int main(void) {
 
     printf("Initializing Pelion Device Management Client...\n");
 
-    // SimpleMbedCloudClient handles registering over LwM2M to Pelion DM
+    // SimpleMbedCloudClient handles registering over LwM2M to Pelion Device Management
     SimpleMbedCloudClient client(net, bd, &fs);
     int client_status = client.init();
     if (client_status != 0) {
-        printf("ERROR: Pelion Client initialization failed (%d)\n", client_status);
+        printf("Pelion Client initialization failed (%d)\n", client_status);
         return -1;
     }
 
@@ -193,19 +168,8 @@ int main(void) {
 
     res_led = client.create_resource("3201/0/5853", "led_state");
     res_led->set_value(1);
-    res_led->methods(M2MMethod::GET | M2MMethod::PUT);
+    res_led->methods(M2MMethod::GET | M2MMethod::PUT | M2MMethod::POST);
     res_led->attach_put_callback(led_put_callback);
-
-    // Sensor resources
-    res_temperature = client.create_resource("3303/0/5700", "temperature");
-    res_temperature->set_value(0);
-    res_temperature->methods(M2MMethod::GET);
-    res_temperature->observable(true);
-
-    res_voltage = client.create_resource("3316/0/5700", "voltage");
-    res_voltage->set_value(0);
-    res_voltage->methods(M2MMethod::GET);
-    res_voltage->observable(true);
 
     printf("Initialized Pelion Device Management Client. Registering...\n");
 
@@ -220,14 +184,19 @@ int main(void) {
         wait_ms(100);
     }
 
+#ifdef USE_BUTTON
+    // The button fires on an interrupt context, but debounces it to the eventqueue, so it's safe to do network operations
     button.fall(eventQueue.event(&button_press));
     printf("Press the user button to increment the LwM2M resource value...\n");
-
+#else
     // The timer fires on an interrupt context, but debounces it to the eventqueue, so it's safe to do network operations
     Ticker timer;
-    timer.attach(eventQueue.event(&sensors_update), SENSORS_POLL_INTERVAL);
+    timer.attach(eventQueue.event(&button_press), 5.0);
+    printf("Simulating button press every 5 seconds...\n");
+#endif /* USE_BUTTON */
 
     // You can easily run the eventQueue in a separate thread if required
     eventQueue.dispatch_forever();
 }
-#endif
+
+#endif /* MBED_TEST_MODE */
