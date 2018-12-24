@@ -13,10 +13,12 @@
             "nsapi.default-wifi-password"       : "\"validation\""
         },
         "K64F": {
-            "target.features_add"               : ["DEVMGMT", "BOOTLOADER"]
+            "target.features_add"               : ["DEVMGMT", "BOOTLOADER"],
+            "target.components_add"             : ["SD"]
         },
         "K66F": {
-            "target.features_add"               : ["DEVMGMT", "BOOTLOADER"]
+            "target.features_add"               : ["DEVMGMT", "BOOTLOADER"],
+            "target.components_add"             : ["SD"]
         },
         "NUCLEO_F429ZI": {
             "target.features_add"               : ["DEVMGMT", "BOOTLOADER"],
@@ -52,20 +54,23 @@
         },
         "DISCO_L475VG_IOT01A": {
             "target.features_add"               : ["DEVMGMT", "BOOTLOADER"],
+            "target.components_add"             : ["QSPIF"],
             "target.extra_labels_add"           : ["WIFI_ISM43362"],
             "target.network-default-interface-type" : "WIFI"
         },
         "DISCO_F413ZH": {
             "target.features_add"               : ["DEVMGMT", "BOOTLOADER"],
+            "target.components_add"             : ["QSPIF"],
             "target.extra_labels_add"           : ["WIFI_ISM43362"],
             "target.network-default-interface-type" : "WIFI"
         },
         "DISCO_F746NG": {
-            "target.features_add"               : ["DEVMGMT", "BOOTLOADER"]
+            "target.features_add"               : ["DEVMGMT", "BOOTLOADER"],
+            "target.components_add"             : ["QSPIF"]
         },
         "DISCO_F769NI": {
             "target.features_add"               : ["DEVMGMT"],
-            "target.components_remove"          : ["QSPIF", "QSPIF"],
+            "target.components_remove"          : ["QSPIF"],
             "target.components_add"             : ["SD"],
             "sd.SPI_MOSI"                       : "D11",
             "sd.SPI_MISO"                       : "D12",
