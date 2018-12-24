@@ -117,6 +117,7 @@
         },
         "GR_LYCHEE": {
             "target.features_add"               : ["DEVMGMT", "BOOTLOADER"],
+            "target.components_add"             : ["SD"],
             "target.extra_labels_add"           : ["ESP32_DRIVER"],
             "target.network-default-interface-type" : "WIFI"
         },
